@@ -1,6 +1,11 @@
 @import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/geist';
 
-@theme {
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
   /* Định nghĩa Font Family */
   --font-sans: 'Inter', 'system-ui', 'sans-serif';
   --font-heading: 'Inter', 'system-ui', 'sans-serif';
@@ -262,11 +267,11 @@
 
 /* Chat bubble variants */
 .chat-bubble-sent {
-  @apply bg-primary/80! text-[hsl(var(--chat-bubble-sent-foreground))]! shadow-(--shadow-bubble);
+  @apply bg-primary/80! text-chat-bubble-sent-fg! shadow-(--shadow-bubble);
 }
 
 .chat-bubble-received {
-  @apply bg-[hsl(var(--chat-bubble-received))] text-[hsl(var(--chat-bubble-received-foreground))] border border-border/50;
+  @apply bg-chat-bubble-received text-chat-bubble-received-fg border border-border/50;
 }
 
 /* Status indicators */
