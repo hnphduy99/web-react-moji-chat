@@ -1,11 +1,20 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import ChatAppPage from './pages/ChatAppPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
+import { useThemeStore } from './stores/useThemeStore';
 
 function App() {
+  const { isDark, setTheme } = useThemeStore();
+
+  useEffect(() => {
+    setTheme(isDark);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDark]);
+
   return (
     <>
       <BrowserRouter>
@@ -20,7 +29,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-      <Toaster richColors />
+      <Toaster richColors theme={isDark ? 'dark' : 'light'} />
     </>
   );
 }
