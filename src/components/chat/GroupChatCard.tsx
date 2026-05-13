@@ -7,7 +7,7 @@ import UnreadCountBadge from './UnreadCountBadge';
 
 const GroupChatCard = ({ data }: { data: Conversation }) => {
   const { user } = useAuthStore();
-  const { activeConversationId, setActiveConversation, messages } = useChatStore();
+  const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore();
 
   if (!user) return null;
 
@@ -17,7 +17,7 @@ const GroupChatCard = ({ data }: { data: Conversation }) => {
   const hanleSelectConversation = async (id: string) => {
     setActiveConversation(id);
     if (!messages[id]) {
-      //todo: fetch message
+      await fetchMessages();
     }
   };
 
