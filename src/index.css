@@ -317,6 +317,10 @@
   box-shadow: var(--shadow-bubble);
 }
 
+.beautiful-scrollbar {
+  @apply scrollbar-thin scrollbar-thumb-slate-300 scrollbar-track-transparent dark:scrollbar-thumb-slate-600;
+}
+
 /* Animations */
 .transition-bounce {
   transition: var(--transition-bounce);
@@ -327,6 +331,10 @@
 }
 
 /* Pulse ring for unread messages */
+.pulse-ring {
+  @apply relative;
+}
+
 .pulse-ring::before {
   content: '';
   @apply absolute inset-0 rounded-full bg-primary/30 animate-ping duration-2000;
