@@ -327,10 +327,6 @@
 }
 
 /* Pulse ring for unread messages */
-.pulse-ring {
-  @apply relative;
-}
-
 .pulse-ring::before {
   content: '';
   @apply absolute inset-0 rounded-full bg-primary/30 animate-ping duration-2000;

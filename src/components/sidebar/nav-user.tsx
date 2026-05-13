@@ -1,6 +1,6 @@
 'use client';
 
-import { BadgeCheckIcon, BellIcon, ChevronsUpDownIcon, CreditCardIcon, LogOutIcon, SparklesIcon } from 'lucide-react';
+import { Bell, ChevronsUpDownIcon, UserIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import {
   DropdownMenu,
@@ -12,16 +12,10 @@ import {
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '~/components/ui/sidebar';
+import type { User } from '~/types/user';
+import Logout from '../auth/Logout';
 
-export function NavUser({
-  user
-}: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-}) {
+export function NavUser({ user }: { user: User }) {
   const { isMobile } = useSidebar();
   return (
     <SidebarMenu>
@@ -29,12 +23,12 @@ export function NavUser({
         <DropdownMenu>
           <DropdownMenuTrigger render={<SidebarMenuButton size='lg' className='aria-expanded:bg-muted' />}>
             <Avatar>
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={user.avatarUrl} alt={user.displayName} />
+              <AvatarFallback>{user.displayName.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className='grid flex-1 text-left text-sm leading-tight'>
-              <span className='truncate font-medium'>{user.name}</span>
-              <span className='truncate text-xs'>{user.email}</span>
+              <span className='truncate font-medium'>{user.displayName}</span>
+              <span className='truncate text-xs'>{user.username}</span>
             </div>
             <ChevronsUpDownIcon className='ml-auto size-4' />
           </DropdownMenuTrigger>
@@ -48,12 +42,12 @@ export function NavUser({
               <DropdownMenuLabel className='p-0 font-normal'>
                 <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                   <Avatar>
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src={user.avatarUrl} alt={user.displayName} />
+                    <AvatarFallback>{user.displayName.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <div className='grid flex-1 text-left text-sm leading-tight'>
-                    <span className='truncate font-medium'>{user.name}</span>
-                    <span className='truncate text-xs'>{user.email}</span>
+                    <span className='truncate font-medium'>{user.displayName}</span>
+                    <span className='truncate text-xs'>{user.username}</span>
                   </div>
                 </div>
               </DropdownMenuLabel>
@@ -61,29 +55,17 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <SparklesIcon />
-                Upgrade to Pro
+                <UserIcon className='text-muted-foreground dark:group-focus:text-accent-foreground!' />
+                Tài khoản
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Bell className='text-muted-foreground dark:group-focus:text-accent-foreground!' />
+                Thông báo
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheckIcon />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOutIcon />
-              Log out
+            <DropdownMenuItem className='cursor-pointer' variant='destructive'>
+              <Logout />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

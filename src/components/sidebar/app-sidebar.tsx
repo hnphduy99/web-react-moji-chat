@@ -16,16 +16,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '~/components/ui/sidebar';
+import { useAuthStore } from '~/stores/useAuthStore';
 import { useThemeStore } from '~/stores/useThemeStore';
 import AddFriendModal from '../chat/AddFriendModal';
 import CreateNewChat from '../chat/CreateNewChat';
-import { DirectMessage } from '../chat/DirectMessage';
+import DirectMessageList from '../chat/DirectMessageList';
 import GroupChatList from '../chat/GroupChatList';
 import NewGroupChatModal from '../chat/NewGroupChatModal';
 import { Switch } from '../ui/switch';
+import { NavUser } from './nav-user';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isDark, toggleTheme } = useThemeStore();
+  const { user } = useAuthStore();
 
   return (
     <Sidebar variant='inset' {...props}>
@@ -82,13 +85,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroupAction>
 
           <SidebarGroupContent>
-            <DirectMessage />
+            <DirectMessageList />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
 
       {/* Footer */}
-      <SidebarFooter>{/* <NavUser user={data.user} /> */}</SidebarFooter>
+      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
     </Sidebar>
   );
 }
