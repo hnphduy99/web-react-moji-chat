@@ -1,6 +1,7 @@
 import { cn } from '~/lib/utils';
 import { useAuthStore } from '~/stores/useAuthStore';
 import { useChatStore } from '~/stores/useChatStore';
+import { useSocketStore } from '~/stores/useSocketStore';
 import type { Conversation } from '~/types/chat';
 import ChatCard from './ChatCard';
 import StatusBadge from './StatusBadge';
@@ -10,6 +11,7 @@ import UserAvatar from './UserAvatar';
 const DirectMessageCard = ({ data }: { data: Conversation }) => {
   const { user } = useAuthStore();
   const { activeConversationId, setActiveConversation, messages, fetchMessages } = useChatStore();
+  const { onlineUsers } = useSocketStore();
 
   if (!user) return null;
 
@@ -37,7 +39,7 @@ const DirectMessageCard = ({ data }: { data: Conversation }) => {
       leftSection={
         <>
           <UserAvatar type='sidebar' name={otherUser.displayName} avatarUrl={otherUser.avatarUrl ?? undefined} />
-          <StatusBadge status='offline' />
+          <StatusBadge status={onlineUsers.includes(otherUser._id ?? '') ? 'online' : 'offline'} />
           {unreadCount > 0 && <UnreadCountBadge unreadCount={unreadCount} />}
         </>
       }

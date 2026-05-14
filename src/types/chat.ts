@@ -29,7 +29,7 @@ export interface LastMessage {
 
 export interface Conversation {
   _id: string;
-  type: "direct" | "group";
+  type: 'direct' | 'group';
   group: Group;
   participants: Participant[];
   lastMessageAt: string;

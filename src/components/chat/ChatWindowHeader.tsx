@@ -1,5 +1,6 @@
 import { useAuthStore } from '~/stores/useAuthStore';
 import { useChatStore } from '~/stores/useChatStore';
+import { useSocketStore } from '~/stores/useSocketStore';
 import type { Conversation } from '~/types/chat';
 import { Separator } from '../ui/separator';
 import { SidebarTrigger } from '../ui/sidebar';
@@ -10,6 +11,8 @@ import UserAvatar from './UserAvatar';
 const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
   const { conversations, activeConversationId } = useChatStore();
   const { user } = useAuthStore();
+  const { onlineUsers } = useSocketStore();
+
   let otherUser;
 
   chat = chat ?? conversations.find((c) => c._id === activeConversationId);
@@ -43,7 +46,7 @@ const ChatWindowHeader = ({ chat }: { chat?: Conversation }) => {
                   name={otherUser?.displayName || 'Moji'}
                   avatarUrl={otherUser?.avatarUrl ?? undefined}
                 />
-                <StatusBadge status='offline' />
+                <StatusBadge status={onlineUsers.includes(otherUser?._id ?? '') ? 'online' : 'offline'} />
               </>
             ) : (
               <GroupChatAvatar participants={chat.participants} type='sidebar' />

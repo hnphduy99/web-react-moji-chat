@@ -15,7 +15,8 @@ export const chatService = {
   },
 
   async fetchMessages(id: string, cursor?: string): Promise<IFetchMessegesProps> {
-    const res = await api.get(`/conversations/${id}/messages?limit=${PAGE_LIMIT}&cursor=${cursor}`);
+    const url = `/conversations/${id}/messages?limit=${PAGE_LIMIT}`;
+    const res = await api.get(cursor ? `${url}&nextCursor=${cursor}` : url);
     return { messages: res.data.messages, cursor: res.data.nextCursor };
   },
 
