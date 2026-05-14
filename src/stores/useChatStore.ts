@@ -70,6 +70,30 @@ export const useChatStore = create<ChatState>()(
         } finally {
           set({ messagesLoading: false });
         }
+      },
+      sendDirectMessage: async (recipientId, content, imgUrl) => {
+        try {
+          const { activeConversationId } = get();
+          await chatService.sendDirectMessage(recipientId, content, imgUrl, activeConversationId || undefined);
+
+          set((state) => ({
+            conversations: state.conversations.map((c) => (c._id === activeConversationId ? { ...c, seenBy: [] } : c))
+          }));
+        } catch (error) {
+          console.log('Lỗi xảy ra khi gọi sendDirectMessage:', error);
+        }
+      },
+      sendGroupMessage: async (conversationId, content, imgUrl) => {
+        try {
+          const { activeConversationId } = get();
+          await chatService.sendDirectMessage(conversationId, content, imgUrl);
+
+          set((state) => ({
+            conversations: state.conversations.map((c) => (c._id === activeConversationId ? { ...c, seenBy: [] } : c))
+          }));
+        } catch (error) {
+          console.log('Lỗi xảy ra khi gọi sendGroupMessage:', error);
+        }
       }
     }),
     {

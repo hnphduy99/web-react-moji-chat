@@ -23,7 +23,7 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
   const participant = selectedConver.participants.find((p) => p._id.toString() === message._id.toString());
 
   return (
-    <div className={cn('flex gap-2 message-bounce', message.isOwn ? 'justify-end' : 'justify-start')}>
+    <div className={cn('flex gap-2 message-bounce mt-1', message.isOwn ? 'justify-end' : 'justify-start')}>
       {/* Avatarr */}
       {!message.isOwn && (
         <div className='w-8'>

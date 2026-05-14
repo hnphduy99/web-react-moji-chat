@@ -18,13 +18,13 @@ const ChatWindowLayout = () => {
   return (
     <SidebarInset className='flex flex-1 fle-col h-full overflow-hidden rounded-sm shadow-md'>
       {/* Header */}
-      <ChatWindowHeader />
+      <ChatWindowHeader chat={selectedConver} />
       {/* Body */}
       <div className='flex-1 overflow-y-auto bg-primary-foreground'>
         <ChatWindowBody />
       </div>
       {/* Footer */}
-      <MessageInput />
+      <MessageInput selectedConver={selectedConver} />
     </SidebarInset>
   );
 };
