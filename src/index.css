@@ -274,6 +274,10 @@
   @apply bg-chat-bubble-received text-chat-bubble-received-fg border border-border/50;
 }
 
+.success-message {
+  @apply text-sm text-emerald-500;
+}
+
 /* Status indicators */
 .status-online {
   @apply bg-[hsl(var(--online))] shadow-[0_0_8px_hsl(var(--online)/0.5)];
