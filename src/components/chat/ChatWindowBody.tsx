@@ -1,13 +1,23 @@
+import { useEffect, useState } from 'react';
 import { useChatStore } from '~/stores/useChatStore';
 import ChatWelcomeScreen from './ChatWelcomeScreen';
 import MessageItem from './MessageItem';
 
 const ChatWindowBody = () => {
   const { activeConversationId, conversations, messages: allMessages } = useChatStore();
+  const [lastMessageStatus, setlastMessageStatus] = useState<'delivered' | 'seen'>('delivered');
 
   const messages = allMessages[activeConversationId!]?.items ?? [];
 
   const selectedConver = conversations.find((c) => c._id === activeConversationId);
+
+  useEffect(() => {
+    const lastMessage = selectedConver?.lastMessage;
+    if (!lastMessage) return;
+    const seenBy = selectedConver?.seenBy ?? [];
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setlastMessageStatus(seenBy.length > 0 ? 'seen' : 'delivered');
+  }, [selectedConver]);
 
   if (!selectedConver) return <ChatWelcomeScreen />;
 
@@ -28,7 +38,7 @@ const ChatWindowBody = () => {
             index={index}
             messages={messages}
             selectedConver={selectedConver}
-            lastMessageStatus='delivered'
+            lastMessageStatus={lastMessageStatus}
           />
         ))}
       </div>

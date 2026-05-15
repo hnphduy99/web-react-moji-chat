@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useChatStore } from '~/stores/useChatStore';
 import { SidebarInset } from '../ui/sidebar';
 import ChatWelcomeScreen from './ChatWelcomeScreen';
@@ -7,9 +8,22 @@ import ChatWindowSkeleton from './ChatWindowSkeleton';
 import MessageInput from './MessageInput';
 
 const ChatWindowLayout = () => {
-  const { activeConversationId, conversations, messagesLoading: loading, messages } = useChatStore();
+  const { activeConversationId, conversations, messagesLoading: loading, markAsSeen } = useChatStore();
 
   const selectedConver = conversations.find((c) => c._id === activeConversationId) ?? null;
+
+  useEffect(() => {
+    if (!selectedConver) return;
+
+    const markSeen = async () => {
+      try {
+        await markAsSeen();
+      } catch (error) {
+        console.error('Lỗi khi gọi markSeen', error);
+      }
+    };
+    markSeen();
+  }, [markAsSeen, selectedConver]);
 
   if (!selectedConver) return <ChatWelcomeScreen />;
 
