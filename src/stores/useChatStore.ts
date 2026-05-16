@@ -13,6 +13,7 @@ export const useChatStore = create<ChatState>()(
       activeConversationId: null,
       conversationLoading: false,
       messagesLoading: false,
+      loading: false,
 
       setActiveConversation: (id) => set({ activeConversationId: id }),
       reset: () => {
@@ -87,7 +88,7 @@ export const useChatStore = create<ChatState>()(
       sendGroupMessage: async (conversationId, content, imgUrl) => {
         try {
           const { activeConversationId } = get();
-          await chatService.sendDirectMessage(conversationId, content, imgUrl);
+          await chatService.sendGroupMessage(conversationId, content, imgUrl);
 
           set((state) => ({
             conversations: state.conversations.map((c) => (c._id === activeConversationId ? { ...c, seenBy: [] } : c))
@@ -167,18 +168,21 @@ export const useChatStore = create<ChatState>()(
         set((state) => {
           const exists = state.conversations.some((c) => c._id === conversation._id);
           return {
-            conversation: exists ? state.conversations : [conversation, ...state.conversations],
+            conversations: exists ? state.conversations : [conversation, ...state.conversations],
             activeConversationId: conversation._id
           };
         });
       },
       createConversation: async (type, name, memberIds) => {
         try {
+          set({ loading: true });
           const conversation = await chatService.createConversation(type, name, memberIds);
           get().addConversation(conversation);
           useSocketStore.getState().socket?.emit('join-conversation', conversation._id);
         } catch (error) {
           console.error('Lỗi xảy ra khi gọi createConversation trong useChatStore:', error);
+        } finally {
+          set({ loading: false });
         }
       }
     }),

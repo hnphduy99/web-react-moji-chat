@@ -35,6 +35,7 @@ export interface ChatState {
   activeConversationId: string | null;
   conversationLoading: boolean;
   messagesLoading: boolean;
+  loading: boolean;
 
   reset: () => void;
   setActiveConversation: (id: string | null) => void;
