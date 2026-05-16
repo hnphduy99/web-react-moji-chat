@@ -4,8 +4,8 @@ import { useForm, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useFriendStore } from '~/stores/useFriendStore';
 import type { User } from '~/types/user';
-import SearchForm from '../AddFriendModal/SearchForm';
-import SendFriendRequestFrom from '../AddFriendModal/SendFriendRequestFrom';
+import SearchForm from '../addFriendModal/SearchForm';
+import SendFriendRequestFrom from '../addFriendModal/SendFriendRequestFrom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 
 export interface IFormValues {

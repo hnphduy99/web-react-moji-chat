@@ -38,5 +38,10 @@ export const friendService = {
     } catch (error) {
       console.error('Lỗi khi từ chối lời mời kết bạn', error);
     }
+  },
+
+  async getFriendList() {
+    const res = await api.get('/friends');
+    return res.data.friends;
   }
 };

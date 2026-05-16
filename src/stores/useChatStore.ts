@@ -3,6 +3,7 @@ import { persist } from 'zustand/middleware';
 import { chatService } from '~/services/chatService';
 import type { ChatState } from '~/types/store';
 import { useAuthStore } from './useAuthStore';
+import { useSocketStore } from './useSocketStore';
 
 export const useChatStore = create<ChatState>()(
   persist(
@@ -160,6 +161,24 @@ export const useChatStore = create<ChatState>()(
           }));
         } catch (error) {
           console.log('Lỗi xảy ra khi gọi markAsSeen trong useChatStore:', error);
+        }
+      },
+      addConversation: (conversation) => {
+        set((state) => {
+          const exists = state.conversations.some((c) => c._id === conversation._id);
+          return {
+            conversation: exists ? state.conversations : [conversation, ...state.conversations],
+            activeConversationId: conversation._id
+          };
+        });
+      },
+      createConversation: async (type, name, memberIds) => {
+        try {
+          const conversation = await chatService.createConversation(type, name, memberIds);
+          get().addConversation(conversation);
+          useSocketStore.getState().socket?.emit('join-conversation', conversation._id);
+        } catch (error) {
+          console.error('Lỗi xảy ra khi gọi createConversation trong useChatStore:', error);
         }
       }
     }),
