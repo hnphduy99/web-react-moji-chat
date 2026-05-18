@@ -21,7 +21,6 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
   const isGroupBreak = isShowTime || message.senderId !== prev?.senderId;
 
   const participant = selectedConver.participants.find((p) => p._id.toString() === message.senderId.toString());
-  console.log('🚀 ~ MessageItem ~ participant:', selectedConver.participants);
 
   return (
     <>
