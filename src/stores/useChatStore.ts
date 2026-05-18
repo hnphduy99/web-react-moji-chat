@@ -172,6 +172,7 @@ export const useChatStore = create<ChatState>()(
             activeConversationId: conversation._id
           };
         });
+        get().fetchMessages(conversation._id);
       },
       createConversation: async (type, name, memberIds) => {
         try {

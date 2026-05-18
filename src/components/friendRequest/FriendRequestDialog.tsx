@@ -16,6 +16,7 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
   const { getAllFriendRequests } = useFriendStore();
 
   useEffect(() => {
+    if (!open) return;
     const loadRequest = async () => {
       try {
         await getAllFriendRequests();
@@ -25,7 +26,7 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
     };
     loadRequest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
