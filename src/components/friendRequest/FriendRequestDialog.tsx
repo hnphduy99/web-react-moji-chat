@@ -35,7 +35,7 @@ const FriendRequestDialog = ({ open, setOpen }: FriendRequestDialogProps) => {
         </DialogHeader>
         <Tabs value={tab} onValueChange={setTab} className='w-full'>
           <TabsList className='w-full grid grid-cols-2'>
-            <TabsTrigger value='recevied'>Đã nhận</TabsTrigger>
+            <TabsTrigger value='received'>Đã nhận</TabsTrigger>
             <TabsTrigger value='sent'>Đã gửi</TabsTrigger>
           </TabsList>
           <TabsContent value='received'>

@@ -10,7 +10,7 @@ const ChatWelcomeScreen = () => {
           <div className='size-24 mx-auto mb-6 bg-gradient-chat rounded-full flex items-center justify-center shadow-glow pulse-ring'>
             <span className='text-3xl'>💬</span>
           </div>
-          <h2 className='text-2xl font-bold mb-2 bg-gradient-chat !bg-clip-text text-transparent'>
+          <h2 className='text-2xl font-bold mb-2 bg-gradient-chat bg-clip-text! text-transparent'>
             Chào mừng bạn đến với Moji!
           </h2>
           <p className='text-muted-foreground'>Chọn 1 cuộc hội thoại để bắt đầu chat</p>

@@ -14,7 +14,7 @@ const FriendListModal = () => {
   };
 
   return (
-    <DialogContent className='glass max-w-md'>
+    <DialogContent className='glass max-w-md gap-2'>
       <DialogHeader>
         <DialogTitle className='flex items-center gap-2 text-xl capitalize'>
           <MessageCircleMore className='size-5' />
@@ -23,14 +23,14 @@ const FriendListModal = () => {
       </DialogHeader>
 
       <div className='space-y-4'>
-        <h1 className='text-sm font-semibold text-muted-foreground mb-3 uppercase tracking-wide'>danh sách bạn bè</h1>
+        <h1 className='text-sm font-semibold text-muted-foreground mb-2 uppercase tracking-wide'>danh sách bạn bè</h1>
       </div>
       <div className='space-y-2 max-h-60 overflow-y-auto'>
         {friends.map((friend) => (
           <Card
             key={friend._id}
             onClick={() => handleCreateConversation(friend._id)}
-            className='p-3 cursor-pointer transition-smooth hover:shadow-soft glass hover:bg-muted/30 group/friendCard'
+            className='p-3 m-1 cursor-pointer transition-smooth hover:shadow-soft glass hover:bg-muted/30 group/friendCard'
           >
             <div className='flex items-center gap-3'>
               <div className='relative'>

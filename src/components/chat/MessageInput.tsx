@@ -51,7 +51,7 @@ const MessageInput = ({ selectedConver }: { selectedConver: Conversation }) => {
           placeholder='Soạn tin nhắn'
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          className='pr-20 h-9 w-full bg-white border-border/50 focus:border-primary/50 transition-smooth resize-none'
+          className='pr-20 h-9 w-full outline-none border-border/50 focus:border-primary/50 transition-smooth resize-none'
         />
         <div className='absolute right-2 top-1/2 -translate-y-1/2 transform flex items-center gap-1'>
           <Button

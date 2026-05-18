@@ -46,7 +46,9 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
         <div
           className={cn('max-w-xs lg:max-w-md spcae-y-1 flex flex-col', message.isOwn ? 'items-end' : 'items-start')}
         >
-          <Card className={cn('p-3', message.isOwn ? 'chat-bubble-sent border-0' : 'bg-chat-bubble-received')}>
+          <Card
+            className={cn('p-3 rounded-lg', message.isOwn ? 'chat-bubble-sent border-0' : 'bg-chat-bubble-received')}
+          >
             <p className='text-sm leading-relaxed wrap-break-word'>{message.content}</p>
           </Card>
           {/* seen /deivered */}
@@ -54,7 +56,7 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
             <Badge
               variant='outline'
               className={cn(
-                'text-xs px-1.5 py-0.5 h-4 border-0',
+                'text-xs mt-2 px-1.5 py-0.5 h-4 border-0',
                 lastMessageStatus === 'seen' ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
               )}
             >
