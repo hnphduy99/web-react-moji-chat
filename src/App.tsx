@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import ChatAppPage from './pages/ChatAppPage';
-import SignInPage from './pages/SignInPage';
-import SignUpPage from './pages/SignUpPage';
 import { useAuthStore } from './stores/useAuthStore';
 import { useSocketStore } from './stores/useSocketStore';
 import { useThemeStore } from './stores/useThemeStore';
+
+const ChatAppPage = lazy(() => import('./pages/ChatAppPage'));
+const SignInPage = lazy(() => import('./pages/SignInPage'));
+const SignUpPage = lazy(() => import('./pages/SignUpPage'));
 
 function App() {
   const { isDark, setTheme } = useThemeStore();
@@ -31,16 +32,18 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Routes>
-          {/* Public route */}
-          <Route path='/signin' element={<SignInPage />} />
-          <Route path='/signup' element={<SignUpPage />} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            {/* Public route */}
+            <Route path='/signin' element={<SignInPage />} />
+            <Route path='/signup' element={<SignUpPage />} />
 
-          {/* Protected route */}
-          <Route element={<ProtectedRoute />}>
-            <Route path='/' element={<ChatAppPage />} />
-          </Route>
-        </Routes>
+            {/* Protected route */}
+            <Route element={<ProtectedRoute />}>
+              <Route path='/' element={<ChatAppPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
       </BrowserRouter>
       <Toaster richColors theme={isDark ? 'dark' : 'light'} />
     </>
