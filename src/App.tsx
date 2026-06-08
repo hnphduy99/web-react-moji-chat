@@ -2,6 +2,7 @@ import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import LightningIcon from './components/icons/LightningIcon';
 import { useAuthStore } from './stores/useAuthStore';
 import { useSocketStore } from './stores/useSocketStore';
 import { useThemeStore } from './stores/useThemeStore';
@@ -32,7 +33,14 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className='flex items-center flex-col justify-center h-screen gap-2'>
+              <LightningIcon />
+              <p className='font-bold animate-pulse'>Loading...</p>
+            </div>
+          }
+        >
           <Routes>
             {/* Public route */}
             <Route path='/signin' element={<SignInPage />} />

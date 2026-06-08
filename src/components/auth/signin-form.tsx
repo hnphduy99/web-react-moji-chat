@@ -7,6 +7,7 @@ import { Card, CardContent } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
 import { useAuthStore } from '~/stores/useAuthStore';
+import { InputPassword } from '../ui/input-password';
 import { Label } from '../ui/label';
 
 const signInSchema = z.object({
@@ -63,7 +64,7 @@ export function SigninForm({ className, ...props }: React.ComponentProps<'div'>)
                 <Label htmlFor='password' className='block text-sm'>
                   Mật khẩu
                 </Label>
-                <Input type='password' id='password' {...register('password')} />
+                <InputPassword id='password' {...register('password')} />
                 {errors.password && <p className='text-destructive text-sm'>{errors.password.message}</p>}
               </div>
 
