@@ -1,3 +1,4 @@
+import { MessageCircleMore } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useChatStore } from '~/stores/useChatStore';
@@ -72,18 +73,26 @@ const ChatWindowBody = () => {
 
   if (!messages.length)
     return (
-      <div className='flex items-center justify-center text-muted-foreground'>
-        Chưa có tin nhắn nào trong cuộc trò chuyện này.
+      <div className='chat-bg-pattern h-full flex items-center justify-center'>
+        <div className='text-center animate-fade-in-up'>
+          <div className='size-14 mx-auto mb-3 rounded-2xl bg-muted flex items-center justify-center'>
+            <span className='text-2xl'>
+              <MessageCircleMore className='text-2xl text-muted-foreground' />
+            </span>
+          </div>
+          <p className='text-sm text-muted-foreground font-medium'>Chưa có tin nhắn nào</p>
+          <p className='text-xs text-muted-foreground/60 mt-1'>Hãy gửi tin nhắn đầu tiên!</p>
+        </div>
       </div>
     );
 
   return (
-    <div className='p-4 bg-primary-foreground h-full flex flex-col overflow-hidden'>
+    <div className='chat-bg-pattern h-full flex flex-col overflow-hidden'>
       <div
         ref={containerRef}
         id='scrollableDiv'
         onScroll={handleScrollSave}
-        className='flex flex-col-reverse overflow-y-auto overflow-x-hidden beautiful-scrollbar'
+        className='flex flex-col-reverse overflow-y-auto overflow-x-hidden beautiful-scrollbar py-2'
       >
         <div ref={messageEndRef} />
 
@@ -92,7 +101,15 @@ const ChatWindowBody = () => {
           next={fetchMoreMessages}
           hasMore={hasMore}
           scrollableTarget='scrollableDiv'
-          loader={<p>Loading...</p>}
+          loader={
+            <div className='flex justify-center py-3'>
+              <div className='flex gap-1.5 items-center px-3 py-2 rounded-full bg-muted/60'>
+                <span className='typing-dot' />
+                <span className='typing-dot' />
+                <span className='typing-dot' />
+              </div>
+            </div>
+          }
           inverse
           style={{
             display: 'flex',

@@ -3,7 +3,7 @@ import { useChatStore } from '~/stores/useChatStore';
 import { useFriendStore } from '~/stores/useFriendStore';
 import UserAvatar from '../chat/UserAvatar';
 import { Card } from '../ui/card';
-import { DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
+import { DialogClose, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 
 const FriendListModal = () => {
   const { friends } = useFriendStore();
@@ -30,18 +30,18 @@ const FriendListModal = () => {
           <Card
             key={friend._id}
             onClick={() => handleCreateConversation(friend._id)}
-            className='p-3 m-1 cursor-pointer transition-smooth hover:shadow-soft glass hover:bg-muted/30 group/friendCard'
+            className='p-3 m-1 mb-2 last:mb-1 cursor-pointer bg-background backdrop-blur-sm transition-smooth hover:shadow-soft glass hover:bg-muted/30 group/friendCard'
           >
-            <div className='flex items-center gap-3'>
+            <DialogClose className='flex items-center gap-3'>
               <div className='relative'>
                 <UserAvatar type='sidebar' name={friend.displayName} avatarUrl={friend.avatarUrl} />
               </div>
 
-              <div className='flex-1 min-w-0 flex flex-col'>
+              <div className='min-w-0 flex flex-col'>
                 <h2 className='font-semibold text-sm truncate'>{friend.displayName}</h2>
                 <span className='text-muted-foreground text-xs'>@{friend.username}</span>
               </div>
-            </div>
+            </DialogClose>
           </Card>
         ))}
         {friends.length === 0 && (

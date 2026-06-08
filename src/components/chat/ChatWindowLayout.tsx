@@ -30,11 +30,11 @@ const ChatWindowLayout = () => {
   if (loading) return <ChatWindowSkeleton />;
 
   return (
-    <SidebarInset className='flex flex-1 fle-col h-full overflow-hidden rounded-sm shadow-md'>
+    <SidebarInset className='flex flex-col flex-1 h-full overflow-hidden rounded-xl shadow-soft'>
       {/* Header */}
       <ChatWindowHeader chat={selectedConver} />
       {/* Body */}
-      <div className='flex-1 overflow-y-auto bg-primary-foreground'>
+      <div className='flex-1 overflow-hidden'>
         <ChatWindowBody />
       </div>
       {/* Footer */}

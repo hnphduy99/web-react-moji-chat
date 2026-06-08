@@ -13,15 +13,10 @@ const EmojiPicker = ({ onChange }: IEmojiPickerProps) => {
   return (
     <Popover>
       <PopoverTrigger className='cursor-pointer'>
-        <Smile className='size-4' />
+        <Smile className='size-4 text-muted-foreground' />
       </PopoverTrigger>
-      <PopoverContent
-        side='right'
-        sideOffset={40}
-        className='bg-transparent border-none shadow-none drop-shadow-none mb-12'
-      >
+      <PopoverContent side='right' className='p-0 border-none ring-0 drop-shadow-none w-full mb-16'>
         <Picker
-          className='w-full'
           theme={isDark ? Theme.DARK : Theme.LIGHT}
           onEmojiClick={(emojiObject) => onChange(emojiObject.emoji)}
           lazyLoadEmojis

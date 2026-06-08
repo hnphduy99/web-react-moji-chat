@@ -1,7 +1,5 @@
 import { cn, formatMessageTime } from '~/lib/utils';
 import type { Conversation, Message } from '~/types/chat';
-import { Badge } from '../ui/badge';
-import { Card } from '../ui/card';
 import UserAvatar from './UserAvatar';
 
 interface IMessageItemProps {
@@ -25,43 +23,66 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
   return (
     <>
       {isShowTime && (
-        <span className='text-xs text-muted-foreground px-1 text-center'>
-          {formatMessageTime(new Date(message.createdAt))}
-        </span>
+        <div className='flex items-center gap-3 my-3 px-2'>
+          <div className='flex-1 h-px bg-border/40' />
+          <span className='text-xs text-muted-foreground/70 font-medium whitespace-nowrap'>
+            {formatMessageTime(new Date(message.createdAt))}
+          </span>
+          <div className='flex-1 h-px bg-border/40' />
+        </div>
       )}
-      <div className={cn('flex gap-2 message-bounce mt-1', message.isOwn ? 'justify-end' : 'justify-start')}>
-        {/* Avatarr */}
+
+      <div
+        className={cn(
+          'flex gap-2 message-bounce px-2',
+          isGroupBreak ? 'mt-2' : 'mt-0.5',
+          message.isOwn ? 'justify-end' : 'justify-start'
+        )}
+      >
+        {/* Avatar vùng trái (received) */}
         {!message.isOwn && (
-          <div className='w-8'>
-            {isGroupBreak && (
-              <UserAvatar
-                type='chat'
-                name={participant?.displayName || 'Moji'}
-                avatarUrl={participant?.avatarUrl ?? undefined}
-              />
+          <div className='w-8 shrink-0 flex items-end'>
+            {isGroupBreak ? (
+              <div className='animate-scale-in'>
+                <UserAvatar
+                  type='chat'
+                  name={participant?.displayName || 'Moji'}
+                  avatarUrl={participant?.avatarUrl ?? undefined}
+                />
+              </div>
+            ) : (
+              <div className='size-8' />
             )}
           </div>
         )}
-        {/* Tin nhắn */}
-        <div
-          className={cn('max-w-xs lg:max-w-md spcae-y-1 flex flex-col', message.isOwn ? 'items-end' : 'items-start')}
-        >
-          <Card
-            className={cn('p-3 rounded-lg', message.isOwn ? 'chat-bubble-sent border-0' : 'bg-chat-bubble-received')}
+
+        {/* Bubble */}
+        <div className={cn('max-w-xs lg:max-w-md flex flex-col gap-1', message.isOwn ? 'items-end' : 'items-start')}>
+          {/* Sender name for group chats */}
+          {!message.isOwn && isGroupBreak && selectedConver.type === 'group' && (
+            <span className='text-xs text-muted-foreground font-medium px-1 ml-1'>{participant?.displayName}</span>
+          )}
+
+          <div
+            className={cn(
+              'px-3.5 py-2.5 text-sm wrap-break-word shadow-sm',
+              message.isOwn
+                ? 'chat-bubble-sent bubble-sent'
+                : 'chat-bubble-received bubble-received border border-border/40'
+            )}
           >
-            <p className='text-sm leading-relaxed wrap-break-word'>{message.content}</p>
-          </Card>
-          {/* seen /deivered */}
+            {message.content}
+          </div>
+
+          {/* Seen / delivered indicator */}
           {message.isOwn && message._id === selectedConver.lastMessage?._id && (
-            <Badge
-              variant='outline'
-              className={cn(
-                'text-xs mt-2 px-1.5 py-0.5 h-4 border-0',
-                lastMessageStatus === 'seen' ? 'bg-primary/20 text-primary' : 'bg-muted text-muted-foreground'
+            <div className='flex items-center gap-1 mt-0.5 px-1'>
+              {lastMessageStatus === 'seen' ? (
+                <span className='text-xs text-primary font-medium'>Đã xem</span>
+              ) : (
+                <span className='text-xs text-muted-foreground'>Đã gửi</span>
               )}
-            >
-              {lastMessageStatus}
-            </Badge>
+            </div>
           )}
         </div>
       </div>
