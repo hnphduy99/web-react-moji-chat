@@ -31,9 +31,9 @@ const PersonalInfoForm = ({ userInfo }: Props) => {
   } = useForm<UserInfoValues>({
     resolver: zodResolver(userInfoSchema),
     defaultValues: {
-      displayName: userInfo.displayName,
-      email: userInfo.email,
-      bio: userInfo.bio
+      displayName: userInfo?.displayName,
+      email: userInfo?.email,
+      bio: userInfo?.bio
     }
   });
 
