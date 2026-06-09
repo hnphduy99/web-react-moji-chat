@@ -15,6 +15,7 @@ export interface AuthState {
   signOut: () => Promise<void>;
   fetchMe: () => Promise<void>;
   refresh: () => Promise<void>;
+  changePassword: (currentPassword: string, newPassword: string) => Promise<void>;
 }
 
 export interface ThemeState {
@@ -73,4 +74,5 @@ export interface FriendStore {
 
 export interface UserState {
   updateAvatarUrl: (formData: FormData) => Promise<void>;
+  updateUserInfo: (userData: Partial<User>) => Promise<void>;
 }

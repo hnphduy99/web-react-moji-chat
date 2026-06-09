@@ -102,6 +102,19 @@ export const useAuthStore = create<AuthState>()(
         } finally {
           set({ loading: false });
         }
+      },
+
+      changePassword: async (currentPassword, newPassword) => {
+        try {
+          const { signOut } = get();
+          await authService.changePassword(currentPassword, newPassword);
+          toast.success('Đổi mật khẩu thành công');
+          signOut();
+        } catch (error: any) {
+          console.error('Lỗi khi changePassword: ', error);
+          const msg = error?.response?.data?.message ?? 'Đổi mật khẩu không thành công';
+          toast.error(msg);
+        }
       }
     }),
     {
