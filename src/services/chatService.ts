@@ -63,5 +63,10 @@ export const chatService = {
   async deleteConversation(conversationId: string) {
     const res = await api.delete(`/conversations/${conversationId}`);
     return res.data;
+  },
+
+  async dissolveGroupChat(conversationId: string) {
+    const res = await api.delete(`/conversations/${conversationId}/dissolve`);
+    return res.data;
   }
 };

@@ -21,6 +21,8 @@ const GroupChatCard = ({ data }: { data: Conversation }) => {
     }
   };
 
+  const isGroupLeader = data.group?.createdBy === user._id;
+
   return (
     <ChatCard
       dataId={data._id}
@@ -29,6 +31,8 @@ const GroupChatCard = ({ data }: { data: Conversation }) => {
       onSelect={hanleSelectConversation}
       unreadCounts={unreadCount}
       isActive={activeConversationId === data._id}
+      conversationType='group'
+      isGroupLeader={isGroupLeader}
       leftSection={
         <>
           {unreadCount > 0 && <UnreadCountBadge unreadCount={unreadCount} />}

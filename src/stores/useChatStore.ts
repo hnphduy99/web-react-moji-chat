@@ -209,6 +209,16 @@ export const useChatStore = create<ChatState>()(
           toast.error('Xóa cuộc trò chuyện thất bại');
         }
       },
+      dissolveGroupChat: async (conversationId) => {
+        try {
+          await chatService.dissolveGroupChat(conversationId);
+          get().removeConversation(conversationId);
+          toast.success('Giải tán nhóm thành công');
+        } catch (error) {
+          console.error('Lỗi xảy ra khi gọi dissolveGroupChat:', error);
+          toast.error('Giải tán nhóm thất bại');
+        }
+      },
       removeConversation: (conversationId) => {
         const { activeConversationId } = get();
         set((state) => {
