@@ -63,16 +63,31 @@ const MessageItem = ({ message, index, messages, selectedConver, lastMessageStat
             <span className='text-xs text-muted-foreground font-medium px-1 ml-1'>{participant?.displayName}</span>
           )}
 
-          <div
-            className={cn(
-              'px-3.5 py-2.5 text-sm wrap-break-word shadow-sm',
-              message.isOwn
-                ? 'chat-bubble-sent bubble-sent'
-                : 'chat-bubble-received bubble-received border border-border/40'
-            )}
-          >
-            {message.content}
-          </div>
+          {message.imgUrl && (
+            <a href={message.imgUrl} target='_blank' rel='noopener noreferrer' className='block'>
+              <img
+                src={message.imgUrl}
+                alt='Ảnh tin nhắn'
+                className={cn(
+                  'max-w-60 max-h-60 object-cover rounded-2xl shadow-sm cursor-pointer hover:opacity-90 transition-opacity',
+                  message.content ? 'mb-1' : ''
+                )}
+              />
+            </a>
+          )}
+
+          {message.content && (
+            <div
+              className={cn(
+                'px-3.5 py-2.5 text-sm wrap-break-word shadow-sm',
+                message.isOwn
+                  ? 'chat-bubble-sent bubble-sent'
+                  : 'chat-bubble-received bubble-received border border-border/40'
+              )}
+            >
+              {message.content}
+            </div>
+          )}
 
           {/* Seen / delivered indicator */}
           {message.isOwn && message._id === selectedConver.lastMessage?._id && (

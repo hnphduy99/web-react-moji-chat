@@ -57,3 +57,33 @@ export const formatMessageTime = (date: Date) => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${timeStr}`; // ví dụ: "15/12/2023 18:40"
   }
 };
+
+export const getMediaType = (file: File) => {
+  const fileType = file.type;
+  if (fileType.startsWith('image/')) return 'image';
+  if (fileType.startsWith('video/')) return 'video';
+  if (fileType.startsWith('audio/')) return 'audio';
+  return 'other';
+};
+
+export const getFileExtension = (fileName: string) => {
+  const dotIndex = fileName.lastIndexOf('.');
+  if (dotIndex === -1) return '';
+  return fileName.slice(dotIndex + 1).toLowerCase();
+};
+
+export const getFileCategory = (fileName: string) => {
+  const ext = getFileExtension(fileName);
+  if (!ext) return 'other';
+  const imageExt = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'heic', 'heif'];
+  const videoExt = ['mp4', 'mov', 'avi', 'mkv', 'webm', 'flv', 'wmv', 'mpeg', 'mpg'];
+  const audioExt = ['mp3', 'wav', 'aac', 'flac', 'ogg', 'm4a', 'wma'];
+  const docExt = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'];
+  const compressedExt = ['zip', 'rar', '7z', 'tar', 'gz', 'iso'];
+  if (imageExt.includes(ext)) return 'image';
+  if (videoExt.includes(ext)) return 'video';
+  if (audioExt.includes(ext)) return 'audio';
+  if (docExt.includes(ext)) return 'document';
+  if (compressedExt.includes(ext)) return 'archive';
+  return 'other';
+};

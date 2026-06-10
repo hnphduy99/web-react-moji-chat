@@ -47,5 +47,16 @@ export const chatService = {
   async createConversation(type: 'direct' | 'group', name: string, memberIds: string[]) {
     const res = await api.post('/conversations', { type, name, memberIds });
     return res.data.conversation;
+  },
+
+  async uploadMessageFile(formData: FormData) {
+    const res = await api.post('/messages/uploadFile', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    if (res.status === 400) throw new Error(res.data.message);
+
+    return res.data;
   }
 };

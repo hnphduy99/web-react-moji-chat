@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { chatService } from '~/services/chatService';
@@ -182,6 +183,18 @@ export const useChatStore = create<ChatState>()(
           useSocketStore.getState().socket?.emit('join-conversation', conversation._id);
         } catch (error) {
           console.error('Lỗi xảy ra khi gọi createConversation trong useChatStore:', error);
+        } finally {
+          set({ loading: false });
+        }
+      },
+      uploadMessageFile: async (formData) => {
+        try {
+          set({ loading: true });
+          const { imgUrl } = await chatService.uploadMessageFile(formData);
+          return imgUrl;
+        } catch (error) {
+          console.error('Lỗi xảy ra khi gọi uploadMessageFile trong useChatStore:', error);
+          toast.error('Upload file thất bại');
         } finally {
           set({ loading: false });
         }
