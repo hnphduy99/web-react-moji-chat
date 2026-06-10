@@ -198,6 +198,28 @@ export const useChatStore = create<ChatState>()(
         } finally {
           set({ loading: false });
         }
+      },
+      deleteConversation: async (conversationId) => {
+        try {
+          await chatService.deleteConversation(conversationId);
+          get().removeConversation(conversationId);
+          toast.success('Xóa cuộc trò chuyện thành công');
+        } catch (error) {
+          console.error('Lỗi xảy ra khi gọi deleteConversation:', error);
+          toast.error('Xóa cuộc trò chuyện thất bại');
+        }
+      },
+      removeConversation: (conversationId) => {
+        const { activeConversationId } = get();
+        set((state) => {
+          const newMessages = { ...state.messages };
+          delete newMessages[conversationId];
+          return {
+            conversations: state.conversations.filter((c) => c._id !== conversationId),
+            messages: newMessages,
+            activeConversationId: activeConversationId === conversationId ? null : activeConversationId
+          };
+        });
       }
     }),
     {

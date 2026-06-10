@@ -51,6 +51,8 @@ export interface ChatState {
   addConversation: (conversation: Conversation) => void;
   createConversation: (type: 'direct' | 'group', name: string, memberIds: string[]) => Promise<void>;
   uploadMessageFile: (formData: FormData) => Promise<string>;
+  deleteConversation: (conversationId: string) => Promise<void>;
+  removeConversation: (conversationId: string) => void;
 }
 
 export interface SocketState {

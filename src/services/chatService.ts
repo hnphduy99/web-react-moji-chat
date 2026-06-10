@@ -58,5 +58,10 @@ export const chatService = {
     if (res.status === 400) throw new Error(res.data.message);
 
     return res.data;
+  },
+
+  async deleteConversation(conversationId: string) {
+    const res = await api.delete(`/conversations/${conversationId}`);
+    return res.data;
   }
 };

@@ -72,6 +72,10 @@ export const useSocketStore = create<SocketState>((set, get) => ({
       useChatStore.getState().addConversation(conversation);
       socket.emit('join-conversation', conversation._id);
     });
+
+    socket.on('conversation-deleted', ({ conversationId }) => {
+      useChatStore.getState().removeConversation(conversationId);
+    });
   },
   disconnectSocket: () => {
     const { socket } = get();
